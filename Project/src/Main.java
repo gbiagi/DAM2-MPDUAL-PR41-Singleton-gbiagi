@@ -1,42 +1,36 @@
-import java.lang.reflect.Constructor;
+import java.io.IOException;
+import java.util.*;
+
 
 public class Main {
+    static Scanner in = new Scanner(System.in); // System.in és global
+    // Main
+    public static void main(String[] args) throws InterruptedException, IOException {
+        boolean running = true;
+        while (running) {
+            String menu = "Escull una opció:";
+            menu = menu + "\n 0) PR430Main";
+            menu = menu + "\n 1) PR431Main";
+            menu = menu + "\n 100) Sortir";
+            System.out.println(menu);
 
-    public static void main(String[] args) {
 
-        System.out.println("Aquest exemple:");
-        System.out.println("- Triga una estona a iniciar l'objecte");
-        System.out.println("- Mostra que 1 i 2 tenen la mateixa instància de l'objecte (Hola, Adeu)");
-        System.out.println("- Mostra que 3 no té la mateixa instància (Pepito)");
-        System.out.println("");
-
-        System.out.println(".. .iniciant 1 ...");
-        SingletonExemple instance1 = SingletonExemple.getInstance("Hola");
-        System.out.println(instance1.value);
-
-        System.out.println(".. .iniciant 2 ...");
-        SingletonExemple instance2 = SingletonExemple.getInstance("Adeu");
-        System.out.println(instance2.value);
-
-        System.out.println(".. .iniciant 3 ...");
-        SingletonExemple instance3 = getNewDestroyedInstance("Pepito");
-        System.out.println(instance3.value);
-    }
-
-    static SingletonExemple getNewDestroyedInstance (String value) {
-        
-        SingletonExemple result = null;
-        try {
-            Constructor<?>[] constructors = SingletonExemple.class.getDeclaredConstructors();
-            for (Constructor<?> constructor : constructors) {
-                //Below code will destroy the singleton pattern
-                constructor.setAccessible(true);
-                result = (SingletonExemple) constructor.newInstance(value);
-                break;
+            int opcio = Integer.valueOf(llegirLinia("Opció:"));
+            try {
+                switch (opcio) {
+                    case 0: PR430Main.main(args); break;
+                    case 1: PR431Main.main(args); break;
+                    case 100: running = false; break;
+                    default: break;
+                }
+            } catch (Exception e) {
+                System.out.println(e);
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
-        return result;
+        in.close();
+    }
+    static public String llegirLinia (String text) {
+        System.out.print(text);
+        return in.nextLine();
     }
 }
